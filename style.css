@@ -1,0 +1,178 @@
+:root {
+    --side-width: 240px; 
+    --side-collapsed: 68px; 
+    --win-accent: #0078d4;
+    --bg-app: #f3f3f3; 
+    --color-urgent: #d13438; 
+    --color-warning: #996100; 
+    --color-success: #107c10;
+}
+
+body, html { 
+    margin: 0; padding: 0; 
+    font-family: 'Segoe UI Variable', sans-serif; 
+    background: var(--bg-app); 
+    height: 100vh; 
+    overflow: hidden; 
+}
+
+.app-container { display: flex; height: 100vh; }
+
+/* --- SIDEBAR --- */
+.sidebar { 
+    width: var(--side-collapsed); 
+    background: rgba(238,238,238,0.8); 
+    backdrop-filter: blur(20px); 
+    border-right: 1px solid rgba(0,0,0,0.08); 
+    transition: 0.3s; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    z-index: 100; 
+    overflow: hidden; 
+}
+
+.sidebar:hover { width: var(--side-width); }
+.sidebar-content { flex-grow: 1; }
+
+.menu-item { 
+    padding: 14px 22px; 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    cursor: pointer; 
+    margin: 4px 8px; 
+    border-radius: 6px; 
+    white-space: nowrap; 
+    transition: 0.2s; 
+}
+
+.menu-item:hover { background: rgba(0,0,0,0.05); }
+.menu-item.active { 
+    background: #fff; 
+    color: var(--win-accent); 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+}
+
+/* --- MAIN CONTENT & CARDS --- */
+.main-content { 
+    flex-grow: 1; 
+    padding: 30px 50px; 
+    overflow-y: auto; 
+    padding-bottom: 120px; 
+}
+
+.cards-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 25px; 
+}
+
+/* BORDA GIRATÓRIA */
+.card-wrapper { 
+    position: relative; 
+    padding: 3px; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    display: flex; 
+}
+
+.card-wrapper::before { 
+    content: ''; 
+    position: absolute; 
+    width: 150%; 
+    height: 150%; 
+    background-image: conic-gradient(transparent, transparent, transparent, var(--border-color, #ccc)); 
+    animation: rotate 4s linear infinite; 
+    top: -25%; 
+    left: -25%; 
+}
+
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.card { 
+    position: relative; 
+    background: #fff; 
+    width: 100%; 
+    padding: 20px; 
+    border-radius: 12px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    z-index: 1; 
+}
+
+.border-urgent { --border-color: var(--color-urgent); }
+.border-warning { --border-color: var(--color-warning); }
+.border-success { --border-color: var(--color-success); }
+
+/* Badges */
+.card-company { font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; }
+.status-badge { padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+.urgent-badge { background: #fde7e9; color: var(--color-urgent); }
+.warning-badge { background: #fff4ce; color: var(--color-warning); }
+.success-badge { background: #dff6dd; color: var(--color-success); }
+
+/* Forms & Filters */
+.form-window { background: #fff; max-width: 600px; margin: auto; border-radius: 12px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.input-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; flex: 1; }
+.form-row { display: flex; gap: 15px; }
+input, select { padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none; }
+.btn-primary { background: var(--win-accent); color: #fff; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; display: flex; gap: 10px; align-items: center; }
+.filter-bar { display: flex; gap: 10px; margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 10px; }
+.search-box { flex: 2; display: flex; align-items: center; background: #eee; padding: 0 10px; border-radius: 6px; }
+.search-box input { background: transparent; border: none; width: 100%; }
+
+.report-container { display: flex; gap: 20px; }
+.report-card { background: #fff; padding: 25px; border-radius: 12px; text-align: center; flex: 1; }
+.report-val { font-size: 32px; font-weight: 700; color: var(--win-accent); display: block; }
+
+/* --- NOVO PLAYER SPOTIFY (DIREITA INFERIOR) --- */
+.spotify-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    z-index: 999;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+    display: flex;
+    flex-direction: column;
+}
+
+.spotify-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 12px 12px 0 0;
+    padding: 6px;
+    gap: 6px;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-bottom: none;
+}
+
+.tab-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #666;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+    text-transform: uppercase;
+}
+
+.tab-btn:hover { background: rgba(0,0,0,0.05); }
+
+.tab-btn.active {
+    background: var(--win-accent);
+    color: #fff;
+}
+
+#spotify-player {
+    border: 1px solid rgba(0,0,0,0.05);
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+}

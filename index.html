@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigações</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-top">
+                    <div class="menu-item toggle-btn">
+                        <span class="material-icons-round">menu</span>
+                        <span class="menu-text">Menu</span>
+                    </div>
+                </div>
+                <div class="menu-items">
+                    <div class="menu-item active" onclick="showSection('view', event)">
+                        <span class="material-icons-round">grid_view</span>
+                        <span class="menu-text">Obrigações</span>
+                    </div>
+                    <div class="menu-item" onclick="showSection('add', event)">
+                        <span class="material-icons-round">add_circle_outline</span>
+                        <span class="menu-text">Cadastrar</span>
+                    </div>
+                    <div class="menu-item" onclick="showSection('history', event)">
+                        <span class="material-icons-round">history</span>
+                        <span class="menu-text">Histórico</span>
+                    </div>
+                    <div class="menu-item" onclick="showSection('reports', event)">
+                        <span class="material-icons-round">analytics</span>
+                        <span class="menu-text">Relatórios</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="menu-item logout-btn" onclick="logoutApp()">
+                    <span class="material-icons-round">logout</span>
+                    <span class="menu-text">Sair</span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <section id="viewSection">
+                <h2 class="page-title">Pendências Ativas</h2>
+                <div class="cards-grid" id="cardsGrid"></div>
+            </section>
+
+            <section id="addSection" style="display: none;">
+                <div class="form-window scale-in">
+                    <div class="form-header">
+                        <h2 class="section-title">Cadastrar Nova Obrigação</h2>
+                        <p>Preencha os dados abaixo (DD/MM/AAAA)</p>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Empresa</label>
+                                <input type="text" id="companyInput" placeholder="Nome da Empresa">
+                            </div>
+                            <div class="input-group">
+                                <label>Obrigação</label>
+                                <input type="text" id="taskInput" placeholder="Ex: DAS, FGTS">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Vencimento</label>
+                                <input type="text" id="dateInput" placeholder="DD/MM/AAAA" maxlength="10">
+                            </div>
+                            <div class="input-group">
+                                <label>Envio E-mail</label>
+                                <input type="text" id="emailDateInput" placeholder="DD/MM/AAAA" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button id="addBtn" class="btn-primary"><span class="material-icons-round">save</span> Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="historySection" style="display: none;">
+                <h2 class="page-title">Histórico de Concluídos</h2>
+                <div class="filter-bar">
+                    <div class="search-box">
+                        <span class="material-icons-round">search</span>
+                        <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="filterHistory()">
+                    </div>
+                    <div class="month-filter">
+                        <select id="monthSelect" onchange="filterHistory()">
+                            <option value="all">Todos os Meses</option>
+                            <option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option>
+                            <option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option>
+                            <option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option>
+                            <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="cards-grid" id="historyGrid"></div>
+            </section>
+
+            <section id="reportsSection" style="display: none;">
+                <h2 class="page-title">Resumo Operacional</h2>
+                <div class="report-container">
+                    <div class="report-card"><span class="report-val" id="countPending">0</span><span>Pendentes</span></div>
+                    <div class="report-card"><span class="report-val" id="countUrgent">0</span><span>Urgentes</span></div>
+                    <div class="report-card"><span class="report-val" id="countDone">0</span><span>Concluídos</span></div>
+                </div>
+            </section>
+        </main>
+
+        <div class="spotify-container">
+            <iframe style="border-radius:12px" 
+                src="https://open.spotify.com/embed/album/53SMVjpWCrKUFbjowChIKb?utm_source=generator&theme=0" 
+                width="100%" 
+                height="80" 
+                frameBorder="0" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
