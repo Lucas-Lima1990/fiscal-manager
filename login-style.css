@@ -1,0 +1,118 @@
+:root {
+    --win-accent: #0078d4;
+    --bg-app: #f3f3f3;
+}
+
+body, html {
+    margin: 0; 
+    padding: 0;
+    font-family: 'Segoe UI Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-app);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-box {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    
+    /* QUADRADO PERFEITO */
+    width: 450px; 
+    height: 450px; 
+    
+    /* CENTRALIZAÇÃO TOTAL */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    
+    /* PADDING PARA AFASTAR DAS BORDAS */
+    padding: 40px; 
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px; /* Afasta o cabeçalho dos inputs */
+}
+
+.login-header .material-icons-round {
+    font-size: 60px;
+    color: var(--win-accent);
+    margin-bottom: 10px;
+}
+
+.login-header h2 { margin: 0; font-size: 22px; color: #1c1c1c; }
+.login-header p { margin: 5px 0 0; font-size: 14px; color: #666; }
+
+#loginForm {
+    width: 100%;
+    max-width: 320px;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background: #f9f9f9;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background: var(--win-accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 50px;
+    margin-top: 10px;
+}
+
+/* --- ANIMAÇÕES --- */
+.btn-loading { pointer-events: none; color: transparent !important; position: relative; }
+.btn-loading::after {
+    content: ""; position: absolute; width: 20px; height: 20px; top: 50%; left: 50%;
+    margin: -10px 0 0 -10px; border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.shake { animation: shake 0.4s ease-in-out; }
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+.error-msg { color: #d13438; font-size: 13px; margin-top: 10px; display: none; text-align: center; }

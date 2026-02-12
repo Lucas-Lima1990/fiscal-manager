@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Sistema de Obrigações</title>
+    <link rel="stylesheet" href="login-style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <span class="material-icons-round">lock</span>
+                <h2>Acesso Restrito</h2>
+                <p>Entre com suas credenciais</p>
+            </div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Usuário</label>
+                    <input type="text" id="username" required placeholder="Digite seu usuário">
+                </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="password" required placeholder="Digite sua senha">
+                </div>
+                <button type="submit" class="btn-login">Acessar Sistema</button>
+                <p id="errorMsg" class="error-msg">Usuário ou senha incorretos!</p>
+            </form>
+        </div>
+    </div>
+    <script src="login-script.js"></script>
+</body>
+</html>

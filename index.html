@@ -38,7 +38,7 @@
             </div>
 
             <div class="sidebar-footer">
-                <div class="menu-item logout-btn" onclick="logoutApp()">
+                <div class="menu-item logout-btn" onclick="logout()">
                     <span class="material-icons-round">logout</span>
                     <span class="menu-text">Sair</span>
                 </div>
@@ -46,16 +46,16 @@
         </nav>
 
         <main class="main-content">
+            
             <section id="viewSection">
-                <h2 class="page-title">Pendências Ativas</h2>
+                <h2 class="page-title">Pendências</h2>
                 <div class="cards-grid" id="cardsGrid"></div>
             </section>
 
             <section id="addSection" style="display: none;">
                 <div class="form-window scale-in">
                     <div class="form-header">
-                        <h2 class="section-title">Cadastrar Nova Obrigação</h2>
-                        <p>Preencha os dados abaixo (DD/MM/AAAA)</p>
+                        <h2 class="section-title">Cadastrar</h2>
                     </div>
                     <div class="form-body">
                         <div class="form-row">
@@ -79,14 +79,16 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button id="addBtn" class="btn-primary"><span class="material-icons-round">save</span> Salvar</button>
+                            <button id="addBtn" class="btn-primary">
+                                <span class="material-icons-round">save</span> Salvar
+                            </button>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section id="historySection" style="display: none;">
-                <h2 class="page-title">Histórico de Concluídos</h2>
+                <h2 class="page-title">Histórico</h2>
                 <div class="filter-bar">
                     <div class="search-box">
                         <span class="material-icons-round">search</span>
@@ -95,37 +97,105 @@
                     <div class="month-filter">
                         <select id="monthSelect" onchange="filterHistory()">
                             <option value="all">Todos os Meses</option>
-                            <option value="01">Janeiro</option><option value="02">Fevereiro</option><option value="03">Março</option>
-                            <option value="04">Abril</option><option value="05">Maio</option><option value="06">Junho</option>
-                            <option value="07">Julho</option><option value="08">Agosto</option><option value="09">Setembro</option>
-                            <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+                            <option value="01">Janeiro</option><option value="02">Fevereiro</option>
+                            <option value="03">Março</option><option value="04">Abril</option>
+                            <option value="05">Maio</option><option value="06">Junho</option>
+                            <option value="07">Julho</option><option value="08">Agosto</option>
+                            <option value="09">Setembro</option><option value="10">Outubro</option>
+                            <option value="11">Novembro</option><option value="12">Dezembro</option>
                         </select>
                     </div>
                 </div>
-                <div class="cards-grid" id="historyGrid"></div>
+                
+                <div class="history-list-container">
+                    <div class="history-list-header">
+                        <span>Empresa</span>
+                        <span>Obrigação</span>
+                        <span>Vencimento</span>
+                        <span>E-mail</span>
+                        <span>Ações</span>
+                    </div>
+                    <div id="historyListContent"></div>
+                </div>
             </section>
 
             <section id="reportsSection" style="display: none;">
-                <h2 class="page-title">Resumo Operacional</h2>
+                <h2 class="page-title">Relatório</h2>
                 <div class="report-container">
                     <div class="report-card"><span class="report-val" id="countPending">0</span><span>Pendentes</span></div>
                     <div class="report-card"><span class="report-val" id="countUrgent">0</span><span>Urgentes</span></div>
                     <div class="report-card"><span class="report-val" id="countDone">0</span><span>Concluídos</span></div>
                 </div>
+
+                <div class="report-actions-bar" style="margin-top: 30px;">
+                    <div class="input-group">
+                        <label>Mês do Relatório</label>
+                        <select id="reportMonthSelect">
+                            <option value="01">Janeiro</option><option value="02" selected>Fevereiro</option>
+                            <option value="03">Março</option><option value="04">Abril</option>
+                            <option value="05">Maio</option><option value="06">Junho</option>
+                            <option value="07">Julho</option><option value="08">Agosto</option>
+                            <option value="09">Setembro</option><option value="10">Outubro</option>
+                            <option value="11">Novembro</option><option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <button onclick="previewReport()" class="btn-primary">
+                        <span class="material-icons-round">visibility</span> Visualizar
+                    </button>
+                    <button onclick="printReport()" class="btn-secondary">
+                        <span class="material-icons-round">print</span> Imprimir
+                    </button>
+                </div>
+
+                <div id="reportPreviewArea" class="history-list-container" style="margin-top: 20px; display: none;">
+                    <div class="history-list-header">
+                        <span>Empresa</span>
+                        <span>Obrigação</span>
+                        <span>Vencimento</span>
+                        <span>E-mail</span>
+                        <span>Status</span>
+                    </div>
+                    <div id="reportPreviewContent"></div>
+                </div>
             </section>
         </main>
+    </div>
 
-        <div class="spotify-container">
-            <iframe style="border-radius:12px" 
-                src="https://open.spotify.com/embed/album/53SMVjpWCrKUFbjowChIKb?utm_source=generator&theme=0" 
-                width="100%" 
-                height="80" 
-                frameBorder="0" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy">
-            </iframe>
+    <div id="editModal" class="modal-overlay" style="display: none;">
+        <div class="form-window modal-content">
+            <div class="form-header">
+                <h2 class="section-title">Editar Obrigação</h2>
+            </div>
+            <div class="form-body">
+                <input type="hidden" id="editIndex">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Empresa</label>
+                        <input type="text" id="editCompanyInput">
+                    </div>
+                    <div class="input-group">
+                        <label>Obrigação</label>
+                        <input type="text" id="editTaskInput">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Vencimento</label>
+                        <input type="text" id="editDateInput" maxlength="10">
+                    </div>
+                    <div class="input-group">
+                        <label>Envio E-mail</label>
+                        <input type="text" id="editEmailDateInput" maxlength="10">
+                    </div>
+                </div>
+                <div class="form-actions" style="justify-content: flex-end; gap: 10px;">
+                    <button onclick="closeEditModal()" class="btn-secondary" style="height: 45px;">Cancelar</button>
+                    <button onclick="saveEdit()" class="btn-primary">Salvar Alterações</button>
+                </div>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
