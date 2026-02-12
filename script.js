@@ -5,15 +5,15 @@ if (sessionStorage.getItem('logado') !== 'true') {
 
 // 2. Função para deslogar
 function logout() {
-    // Limpa a marcação de login da sessão
     sessionStorage.removeItem('logado');
-    // Redireciona para a tela de login
     window.location.href = "login.html";
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    let obligations = JSON.parse(localStorage.getItem('minhasObrigacoes')) || [];
+// Variavel global para as obrigações
+let obligations = JSON.parse(localStorage.getItem('minhasObrigacoes')) || [];
 
+document.addEventListener('DOMContentLoaded', () => {
+    
     // --- MÁSCARA DE DATA ---
     const applyMask = (el) => {
         if(!el) return;
@@ -58,13 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- RENDERIZAÇÃO ---
-    function renderData() {
+    window.renderData = function() {
         const grid = document.getElementById('cardsGrid');
         const historyList = document.getElementById('historyListContent');
         
         if(grid) grid.innerHTML = ''; 
         if(historyList) historyList.innerHTML = '';
         
+        // Ordena por data antes de renderizar
         obligations.sort((a,b) => parseDate(a.date) - parseDate(b.date));
         
         obligations.forEach((item, i) => {
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // SALVA SEMPRE QUE RENDERIZA
         localStorage.setItem('minhasObrigacoes', JSON.stringify(obligations));
         generateReports();
     }
@@ -138,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedMonth = document.getElementById('reportMonthSelect').value;
         const previewContent = document.getElementById('reportPreviewContent');
         const previewArea = document.getElementById('reportPreviewArea');
-        
         const filtered = obligations.filter(o => o.date.split('/')[1] === selectedMonth);
         
         if(filtered.length === 0) {
@@ -163,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`;
             previewContent.insertAdjacentHTML('beforeend', row);
         });
-
         previewArea.style.display = 'block';
     };
 
@@ -202,10 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const task = item.querySelector('.h-col-task').innerText.toUpperCase();
             const date = item.querySelector('.h-col-date').innerText;
             const itemMonth = date.split('/')[1];
-
             const matchesSearch = company.includes(search) || task.includes(search);
             const matchesMonth = (month === 'all' || itemMonth === month);
-
             item.style.display = (matchesSearch && matchesMonth) ? 'grid' : 'none';
         });
     };
@@ -223,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     };
 
+    // FUNÇÕES DE EDIÇÃO DISPONIBILIZADAS GLOBALMENTE
     window.openEditModal = (index) => {
         const item = obligations[index];
         document.getElementById('editIndex').value = index;
@@ -244,13 +243,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = document.getElementById('editDateInput').value;
 
         if(comp && task && date.length === 10) {
+            // Atualiza os dados no array global
             obligations[i].company = comp.toUpperCase();
             obligations[i].name = task.toUpperCase();
             obligations[i].date = date;
             obligations[i].emailDate = document.getElementById('editEmailDateInput').value;
+            
+            // Fecha o modal e renderiza (o renderData já salva no LocalStorage)
             closeEditModal();
             renderData();
-        } else alert("Preencha os campos obrigatórios!");
+        } else {
+            alert("Preencha os campos obrigatórios!");
+        }
     };
 
     const addBtn = document.getElementById('addBtn');
@@ -271,12 +275,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // --- TOGGLE SIDEBAR (Adicionado para funcionar seu botão de menu) ---
     const toggleBtn = document.querySelector('.toggle-btn');
     const sidebar = document.querySelector('.sidebar');
     if(toggleBtn && sidebar) {
         toggleBtn.addEventListener('click', () => {
-            // Se você quiser que o clique trave a sidebar aberta/fechada
             sidebar.classList.toggle('collapsed');
         });
     }
