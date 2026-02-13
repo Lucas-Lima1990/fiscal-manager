@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obrigações</title>
+    <title>LUC CONT | Gestão Pendências</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
@@ -20,7 +20,7 @@
                 <div class="menu-items">
                     <div class="menu-item active" onclick="showSection('view', event)">
                         <span class="material-icons-round">grid_view</span>
-                        <span class="menu-text">Obrigações</span>
+                        <span class="menu-text">Pendência</span>
                     </div>
                     <div class="menu-item" onclick="showSection('add', event)">
                         <span class="material-icons-round">add_circle_outline</span>
@@ -74,7 +74,7 @@
                                 <input type="text" id="dateInput" placeholder="DD/MM/AAAA" maxlength="10">
                             </div>
                             <div class="input-group">
-                                <label>Envio E-mail / Conclusão</label>
+                                <label>Data E-mail / Conclusão</label>
                                 <input type="text" id="emailDateInput" placeholder="DD/MM/AAAA" maxlength="10">
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                         <span>Empresa</span>
                         <span>Obrigação</span>
                         <span>Vencimento</span>
-                        <span>E-mail / Conclusão</span>
+                        <span>Data E-mail / Conclusão</span>
                         <span>Ações</span>
                     </div>
                     <div id="historyListContent"></div>
@@ -131,7 +131,8 @@
                     <div class="input-group">
                         <label>Mês do Relatório</label>
                         <select id="reportMonthSelect">
-                            <option value="01">Janeiro</option><option value="02" selected>Fevereiro</option>
+                            <option value="00">-----</option>
+                            <option value="01">Janeiro</option><option value="02">Fevereiro</option>
                             <option value="03">Março</option><option value="04">Abril</option>
                             <option value="05">Maio</option><option value="06">Junho</option>
                             <option value="07">Julho</option><option value="08">Agosto</option>
@@ -152,7 +153,7 @@
                         <span>Empresa</span>
                         <span>Obrigação</span>
                         <span>Vencimento</span>
-                        <span>E-mail / Conclusão</span>
+                        <span>Data E-mail / Conclusão</span>
                         <span>Status</span>
                     </div>
                     <div id="reportPreviewContent"></div>
@@ -164,7 +165,7 @@
     <div id="editModal" class="modal-overlay" style="display: none;">
         <div class="form-window modal-content">
             <div class="form-header">
-                <h2 class="section-title">Editar Obrigação</h2>
+                <h2 class="section-title">Editar Pendência</h2>
             </div>
             <div class="form-body">
                 <input type="hidden" id="editIndex">
@@ -184,13 +185,13 @@
                         <input type="text" id="editDateInput" maxlength="10">
                     </div>
                     <div class="input-group">
-                        <label>Envio E-mail</label>
-                        <input type="text" id="editEmailDateInput" maxlength="10">
+                        <label>Data E-mail / Conclusão</label>
+                        <input type="text" id="editEmailDateInput" placeholder="DD/MM/AAAA" maxlength="10">
                     </div>
                 </div>
                 <div class="form-actions" style="justify-content: flex-end; gap: 10px;">
                     <button onclick="closeEditModal()" class="btn-secondary" style="height: 45px;">Cancelar</button>
-                    <button onclick="saveEdit()" class="btn-primary">Salvar Alterações</button>
+                    <button onclick="saveEdit()" class="btn-primary"><span class="material-icons-round">save</span>Salvar</button>
                 </div>
             </div>
         </div>

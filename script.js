@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="h-col-date">${item.date}</div>
                             <div class="h-col-email">${item.emailDate || '---'}</div>
                             <div class="h-actions">
-                                <button class="btn-restore" onclick="toggleTask(${i})" title="Restaurar para Pendências">
+                                <button class="btn-restore" onclick="toggleTask(${i})" title="Reativar Pendência">
                                     <span class="material-icons-round">settings_backup_restore</span>
                                 </button>
                             </div>

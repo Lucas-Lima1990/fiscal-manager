@@ -1,5 +1,6 @@
 :root {
     --win-accent: #0078d4;
+    --win-success: #107c10;
     --bg-app: #f3f3f3;
 }
 
@@ -25,41 +26,75 @@ body, html {
 .login-box {
     background: #fff;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    
-    /* QUADRADO PERFEITO */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
     width: 450px; 
-    height: 450px; 
-    
-    /* CENTRALIZAÇÃO TOTAL */
+    height: 480px; 
     display: flex;
     flex-direction: column;
-    justify-content: center; 
     align-items: center;
-    
-    /* PADDING PARA AFASTAR DAS BORDAS */
     padding: 40px; 
     box-sizing: border-box;
-    transition: transform 0.3s ease;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
 }
 
 .login-header {
     text-align: center;
-    margin-bottom: 30px; /* Afasta o cabeçalho dos inputs */
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.8s ease-in-out;
+    width: 100%;
+}
+
+/* Centralização total no sucesso */
+.header-centered {
+    margin-bottom: 0 !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-header .material-icons-round {
-    font-size: 60px;
+    font-size: 80px;
     color: var(--win-accent);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    display: inline-block;
+    transition: all 0.8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
-.login-header h2 { margin: 0; font-size: 22px; color: #1c1c1c; }
-.login-header p { margin: 5px 0 0; font-size: 14px; color: #666; }
+.login-header h2 { 
+    margin: 0; 
+    font-size: 24px; 
+    color: #1c1c1c; 
+    transition: all 0.5s ease; 
+}
+
+.login-header p { 
+    margin: 5px 0 0; 
+    font-size: 14px; 
+    color: #666; 
+    transition: all 0.5s ease; 
+}
 
 #loginForm {
     width: 100%;
     max-width: 320px;
+    transition: all 0.5s ease;
+    opacity: 1;
+}
+
+/* Esconde o form suavemente */
+.form-hidden {
+    opacity: 0 !important;
+    transform: scale(0.8);
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
 }
 
 .input-group {
@@ -84,7 +119,11 @@ body, html {
     box-sizing: border-box;
     font-size: 15px;
     background: #f9f9f9;
+    outline: none;
+    transition: 0.3s;
 }
+
+.input-group input:focus { border-color: var(--win-accent); background: #fff; }
 
 .btn-login {
     width: 100%;
@@ -96,10 +135,28 @@ body, html {
     font-weight: 600;
     cursor: pointer;
     min-height: 50px;
-    margin-top: 10px;
+    transition: 0.3s;
 }
 
-/* --- ANIMAÇÕES --- */
+/* --- ANIMAÇÃO DO CADEADO (SEM LUZ VERDE NO FUNDO) --- */
+.lock-open-success {
+    transform: scale(2.5) !important;
+    color: var(--win-success) !important;
+    margin-bottom: 60px !important; /* Espaço entre o cadeado e o texto */
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Shake de Erro */
+.shake { animation: shake 0.4s ease-in-out; }
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.error-msg { color: #d13438; font-size: 13px; margin-top: 15px; display: none; text-align: center; }
+
+/* Classe Loading opcional */
 .btn-loading { pointer-events: none; color: transparent !important; position: relative; }
 .btn-loading::after {
     content: ""; position: absolute; width: 20px; height: 20px; top: 50%; left: 50%;
@@ -107,12 +164,3 @@ body, html {
     border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-.shake { animation: shake 0.4s ease-in-out; }
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    75% { transform: translateX(8px); }
-}
-
-.error-msg { color: #d13438; font-size: 13px; margin-top: 10px; display: none; text-align: center; }
